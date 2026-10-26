@@ -2,7 +2,7 @@
 <div class="grid gap-6">
     <div class="flex flex-wrap items-center justify-between gap-4">
         <div class="flex flex-wrap items-center gap-2">
-            <select wire:model.live="office" aria-label="Office" class="h-9 rounded-md border border-input bg-background px-3 text-sm">
+            <select wire:model.live="office" aria-label="Office" class="blat-select w-auto">
                 @foreach ($offices as $choice)
                     <option value="{{ $choice->id }}">{{ $choice->title }}</option>
                 @endforeach

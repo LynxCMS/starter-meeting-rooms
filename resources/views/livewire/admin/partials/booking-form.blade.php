@@ -41,7 +41,7 @@
     <div class="grid gap-4 sm:grid-cols-4">
         <label class="grid gap-1.5 text-sm sm:col-span-2">
             <span class="font-medium">Room</span>
-            <select wire:model="form.room" @disabled($wholeSeries) class="h-9 rounded-md border border-input bg-background px-3 disabled:opacity-50">
+            <select wire:model="form.room" @disabled($wholeSeries) class="blat-select">
                 @foreach ($rooms as $choice)
                     <option value="{{ $choice->id }}">{{ $choice->title }}</option>
                 @endforeach
@@ -49,19 +49,19 @@
         </label>
         <label class="grid gap-1.5 text-sm sm:col-span-2">
             <span class="font-medium">Day</span>
-            <input type="date" wire:model="form.date" @disabled($wholeSeries) class="h-9 rounded-md border border-input bg-background px-3 disabled:opacity-50">
+            <input type="date" wire:model="form.date" @disabled($wholeSeries) class="blat-input">
         </label>
         <label class="grid gap-1.5 text-sm">
             <span class="font-medium">From</span>
-            <input type="time" step="300" wire:model="form.from" class="h-9 rounded-md border border-input bg-background px-3 tabular-nums">
+            <input type="time" step="300" wire:model="form.from" class="blat-input tabular-nums">
         </label>
         <label class="grid gap-1.5 text-sm">
             <span class="font-medium">To</span>
-            <input type="time" step="300" wire:model="form.to" class="h-9 rounded-md border border-input bg-background px-3 tabular-nums">
+            <input type="time" step="300" wire:model="form.to" class="blat-input tabular-nums">
         </label>
         <label class="grid gap-1.5 text-sm sm:col-span-2">
             <span class="font-medium">{{ $isBlock ? 'Reason' : 'Title' }}</span>
-            <input type="text" wire:model="form.title" maxlength="120" placeholder="{{ $isBlock ? 'New screen, cleaning…' : 'What the meeting is' }}" class="h-9 rounded-md border border-input bg-background px-3">
+            <input type="text" wire:model="form.title" maxlength="120" placeholder="{{ $isBlock ? 'New screen, cleaning…' : 'What the meeting is' }}" class="blat-input">
         </label>
     </div>
 
@@ -69,7 +69,7 @@
         <div class="grid gap-4 sm:grid-cols-4">
             <label class="grid gap-1.5 text-sm sm:col-span-2">
                 <span class="font-medium">Repeat</span>
-                <select wire:model.live="form.repeat" class="h-9 rounded-md border border-input bg-background px-3">
+                <select wire:model.live="form.repeat" class="blat-select">
                     <option value="">Does not repeat</option>
                     <option value="weekly">Every week</option>
                     <option value="biweekly">Every 2 weeks</option>
@@ -79,7 +79,7 @@
             @if ($form['repeat'] !== '')
                 <label class="grid gap-1.5 text-sm sm:col-span-2">
                     <span class="font-medium">Until</span>
-                    <input type="date" wire:model="form.until" class="h-9 rounded-md border border-input bg-background px-3">
+                    <input type="date" wire:model="form.until" class="blat-input">
                 </label>
             @endif
         </div>
@@ -89,7 +89,7 @@
         <div class="flex flex-wrap items-center gap-2 text-sm">
             <span class="font-medium">Invited</span>
             @if ($invitable !== [])
-                <select wire:model.live="invitee" aria-label="Invite a colleague" class="h-9 rounded-md border border-input bg-background px-3">
+                <select wire:model.live="invitee" aria-label="Invite a colleague" class="blat-select w-auto">
                     <option value="">Invite a colleague…</option>
                     @foreach ($invitable as $person)
                         <option value="{{ $person->email }}">{{ $person->name }}</option>
