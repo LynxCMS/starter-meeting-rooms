@@ -1,0 +1,29 @@
+/*
+ * The app's own admin screens (bookings, kiosk links). The admin ships its CSS built, so classes it
+ * never used would be missing: this sheet adds Tailwind's utilities for the app's admin views only,
+ * with colours mapped to the admin's theme tokens, so a re-themed admin restyles these screens too.
+ * Loaded after the admin's CSS through lynx-admin.stylesheets (AppServiceProvider).
+ */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+
+@source '../views/admin';
+@source '../views/livewire/admin';
+
+@theme inline {
+    --color-*: initial;
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-destructive: var(--destructive);
+}

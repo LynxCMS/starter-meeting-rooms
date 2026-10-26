@@ -1,0 +1,271 @@
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/fraunces/full-italic.css';
+@import '@fontsource-variable/instrument-sans/index.css';
+@import 'tailwindcss';
+@import '../../vendor/lynxcms/forms/resources/css/forms.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/*
+ * Castor & Otters, Inc.: a lakeside palette. Birch paper, a warm bark-black for text (warmer and
+ * darker than a blue-grey on beige), lake blues, reeds, and the copper of a beaver's coat for the
+ * few things that should stand out.
+ */
+@theme {
+    --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Fraunces Variable', ui-serif, Georgia, serif;
+
+    --color-paper: oklch(97.5% 0.012 85);
+    --color-birch: oklch(93.5% 0.02 85);
+    --color-sand: oklch(89% 0.032 75);
+    --color-mist: oklch(91% 0.025 205);
+    --color-ink: oklch(21% 0.022 35);
+    --color-lake: oklch(40% 0.07 220);
+    --color-lake-deep: oklch(30% 0.06 225);
+    --color-shallows: oklch(70% 0.06 205);
+    --color-reed: oklch(52% 0.08 140);
+    --color-reed-pale: oklch(88% 0.05 130);
+    --color-copper: oklch(57% 0.13 50);
+    --color-copper-pale: oklch(90% 0.05 60);
+    --color-bark: oklch(40% 0.06 55);
+    --color-bark-pale: oklch(63% 0.07 60);
+    --color-muted: oklch(36% 0.025 35);
+
+    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+    html {
+        color-scheme: light;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-copper);
+        outline-offset: 3px;
+    }
+
+    ::selection {
+        background: var(--color-copper-pale);
+        color: var(--color-ink);
+    }
+}
+
+/*
+ * Dropdowns draw their own chevron, inset from the rounded edge, instead of the browser's, which
+ * sits against it. Outside any layer, so its right padding wins over px-* utilities; it sets only
+ * the background image, so each select keeps its own background colour.
+ */
+select:not([multiple], [size]) {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-inline-end: 2.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23211511' stroke-opacity='0.7' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.1rem center;
+    background-size: 1rem;
+}
+
+@utility font-display {
+    font-family: var(--font-display);
+    font-variation-settings: 'SOFT' 50;
+}
+
+@utility text-display {
+    font-family: var(--font-display);
+    font-variation-settings: 'SOFT' 50;
+    font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+}
+
+@utility text-title {
+    font-family: var(--font-display);
+    font-variation-settings: 'SOFT' 50;
+    font-size: clamp(2rem, 1.5rem + 2vw, 3.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+}
+
+@utility eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+/* Rich text written in the admin. */
+@utility copy {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    max-width: 65ch;
+
+    & p + p,
+    & p + ul,
+    & ul + p,
+    & p + h2 {
+        margin-top: 1.1em;
+    }
+
+    & h2 {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        line-height: 1.25;
+        margin-top: 1.8em;
+        margin-bottom: 0.5em;
+    }
+
+    & ul {
+        list-style: disc;
+        padding-left: 1.25em;
+    }
+
+    /* Links in running text may wrap, so their wave is a background repeated on every line. */
+    & a {
+        color: var(--color-lake);
+        text-decoration: none;
+        padding-bottom: 0.2em;
+        background: var(--wave-lake) repeat-x left bottom / 16px 6px;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+        transition: color 0.2s;
+    }
+
+    & a:hover {
+        color: var(--color-copper);
+        background-image: var(--wave-copper);
+    }
+
+    & em {
+        font-family: var(--font-display);
+        font-style: italic;
+    }
+}
+
+/*
+ * No straight lines by the water: links are underlined and rows are divided by waves. A wave is a
+ * 16 by 6 SVG path repeated along the line. --wave is a mask (it takes the text's colour); the
+ * coloured ones are backgrounds, for links in running text that wrap and for rules.
+ */
+:root {
+    --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3Q4 0.5 8 3T16 3' fill='none' stroke='black' stroke-width='1.4'/%3E%3C/svg%3E");
+    --wave-lake: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3Q4 0.5 8 3T16 3' fill='none' stroke='%231f5a69' stroke-opacity='0.55' stroke-width='1.4'/%3E%3C/svg%3E");
+    --wave-copper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6' viewBox='0 0 16 6'%3E%3Cpath d='M0 3Q4 0.5 8 3T16 3' fill='none' stroke='%23b4602c' stroke-width='1.4'/%3E%3C/svg%3E");
+    --wave-rule: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='8' viewBox='0 0 32 8'%3E%3Cpath d='M0 4Q8 1 16 4T32 4' fill='none' stroke='%23211511' stroke-opacity='0.16' stroke-width='1.2'/%3E%3C/svg%3E");
+    --wave-rule-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='8' viewBox='0 0 32 8'%3E%3Cpath d='M0 4Q8 1 16 4T32 4' fill='none' stroke='%23f8f4ec' stroke-opacity='0.16' stroke-width='1.2'/%3E%3C/svg%3E");
+}
+
+/* A one-line link with a wave under it, in its own colour, that ripples on hover. */
+@utility link-wave {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.35em;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 6px;
+        background: currentColor;
+        opacity: 0.4;
+        mask: var(--wave) repeat-x 0 0 / 16px 6px;
+        -webkit-mask: var(--wave) repeat-x 0 0 / 16px 6px;
+        transition: opacity 0.3s;
+    }
+
+    &:hover::after,
+    &:focus-visible::after {
+        opacity: 1;
+        animation: ripple 0.8s linear infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &:hover::after,
+        &:focus-visible::after {
+            animation: none;
+        }
+    }
+}
+
+@keyframes ripple {
+    to {
+        mask-position: 16px 0;
+        -webkit-mask-position: 16px 0;
+    }
+}
+
+/* The footer's waterline drifts: front to the left, the fainter shallows behind to the right, slower. */
+@keyframes drift {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-1200px);
+    }
+}
+
+@utility wave-drift {
+    animation: drift 16s linear infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+    }
+}
+
+@utility wave-drift-back {
+    animation: drift 26s linear infinite reverse;
+
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+    }
+}
+
+/* A wavy rule along the top of a row, in place of a straight border. */
+@utility wave-rule {
+    background: var(--wave-rule) repeat-x left top / 32px 8px;
+}
+
+@utility wave-rule-light {
+    background: var(--wave-rule-light) repeat-x left top / 32px 8px;
+}
+
+/* Pages arrive like a slow ripple; nothing moves for visitors who asked for less motion. */
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+}
+
+@utility rise {
+    animation: rise 0.9s var(--ease-out-quint) both;
+
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+    }
+}
+
+/* Lynx forms (the consultation request) in the site's colours: pill buttons, soft paper fields. */
+.lynx-form {
+    --lynx-form-text: var(--color-ink);
+    --lynx-form-muted: var(--color-muted);
+    --lynx-form-line: color-mix(in oklab, var(--color-ink) 18%, transparent);
+    --lynx-form-field: var(--color-paper);
+    --lynx-form-accent: var(--color-ink);
+    --lynx-form-accent-text: var(--color-paper);
+    --lynx-form-error: var(--color-copper);
+    --lynx-form-radius: 1rem;
+    --lynx-form-gap: 1.25rem;
+
+    & .lynx-form-button:not(.is-link) {
+        border-radius: 9999px;
+        padding: 0.8rem 1.6rem;
+        transition: background-color 0.2s;
+    }
+
+    & .lynx-form-button:not(.is-secondary, .is-link):hover {
+        background: var(--color-copper);
+    }
+}

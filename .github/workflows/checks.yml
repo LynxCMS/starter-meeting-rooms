@@ -1,0 +1,40 @@
+# The app's tests, Pint and PHPStan, on every push and pull request.
+name: Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: sqlite3, pdo_sqlite, intl
+          tools: composer:v2
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Install
+        run: |
+          composer install --no-interaction --prefer-dist
+          npm ci
+          npm run build
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Pint
+        run: vendor/bin/pint --test
+
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --no-progress
+
+      - name: Tests
+        run: php artisan test --compact
