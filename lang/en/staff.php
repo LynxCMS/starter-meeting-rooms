@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 // The staff's booking pages (/book, /my-bookings).
 return [
-    'book_title' => 'Book a room',
-    'book_summary' => 'Pick a day, how long and how many seats; then a start time.',
     'my_bookings' => 'My bookings',
-    'mine_summary' => 'Your meetings that have not ended yet, :name.',
     'office' => 'Office',
     'day' => 'Day',
     'length' => 'How long',

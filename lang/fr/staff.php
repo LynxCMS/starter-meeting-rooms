@@ -3,10 +3,7 @@
 declare(strict_types=1);
 
 return [
-    'book_title' => 'Réserver une salle',
-    'book_summary' => 'Choisissez un jour, une durée et un nombre de places, puis une heure.',
     'my_bookings' => 'Mes réservations',
-    'mine_summary' => 'Vos réunions qui ne sont pas terminées, :name.',
     'office' => 'Bureau',
     'day' => 'Jour',
     'length' => 'Durée',
