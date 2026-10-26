@@ -53,6 +53,14 @@ it('gives a lawyer their own title where the role\'s label does not fit, else th
     'English role, no title in English' => ['/team/pascale-brochet', 'Associate'],
 ]);
 
+it('tells search engines a lawyer works for the firm', function (): void {
+    $html = (string) $this->get('/team/olive-otter')->assertOk()->getContent();
+    preg_match('#<script type="application/ld\+json">(.*?)</script>#s', $html, $match);
+    $person = collect(json_decode($match[1] ?? '{}', true)['@graph'] ?? [])->firstWhere('@type', 'Person');
+
+    expect($person['worksFor'] ?? null)->toBe(['@id' => url('/').'/#organization']);
+});
+
 it('lists a practice area\'s lawyers with their titles', function (): void {
     $this->get('/fr/domaines/pecheries')->assertOk()->assertSeeInOrder(['Pascale Brochet', 'Avocate', 'Hélène Héron', 'Associée', 'Kit Martin', 'Avocate']);
 });

@@ -102,6 +102,7 @@ final class SiteFeaturesSeeder extends Seeder
             'name' => '@title',
             'jobTitle' => 'role',
             'description' => 'summary',
+            'worksFor' => '@organization',
         ]]);
 
         lynx()->run(MapTemplate::class, ['template' => 'office', 'type' => 'ProfessionalService', 'map' => [

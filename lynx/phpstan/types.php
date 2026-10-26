@@ -38,17 +38,17 @@ return array (
     ),
     'accent_color' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'address' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'body' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'capacity' => 
@@ -68,7 +68,7 @@ return array (
     ),
     'city' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'closes' => 
@@ -78,7 +78,7 @@ return array (
     ),
     'color' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'ends' => 
@@ -93,22 +93,22 @@ return array (
     ),
     'figure' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'figure_note' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'floor' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'fun_fact' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'highlights' => 
@@ -123,7 +123,7 @@ return array (
     ),
     'job_title' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'kind' => 
@@ -148,7 +148,7 @@ return array (
     ),
     'menu_class' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_depth' => 
@@ -158,17 +158,17 @@ return array (
     ),
     'menu_icon_after' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_icon_before' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_languages' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_limit' => 
@@ -183,17 +183,17 @@ return array (
     ),
     'menu_rel' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_target' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_url' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'office' => 
@@ -218,7 +218,7 @@ return array (
     ),
     'page_cache_rules' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'page_password' => 
@@ -228,7 +228,7 @@ return array (
     ),
     'phone' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'photo' => 
@@ -273,7 +273,7 @@ return array (
     ),
     'seo_default_description' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'seo_default_image' => 
@@ -283,7 +283,7 @@ return array (
     ),
     'seo_description' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'seo_image' => 
@@ -303,12 +303,12 @@ return array (
     ),
     'seo_org_name' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_org_same_as' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_org_type' => 
@@ -318,22 +318,22 @@ return array (
     ),
     'seo_robots_extra' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_schema_map' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_schema_template' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_schema_type' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_schemas' => 
@@ -343,22 +343,22 @@ return array (
     ),
     'seo_site_name' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'seo_title' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'seo_title_pattern' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'seo_twitter' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'show_announcements' => 
@@ -368,7 +368,7 @@ return array (
     ),
     'species' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'starts' => 
@@ -378,12 +378,12 @@ return array (
     ),
     'summary' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'tagline' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'time_zone' => 
@@ -393,7 +393,7 @@ return array (
     ),
     'title' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'weekday' => 
@@ -411,17 +411,17 @@ return array (
     ),
     'accent_color' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'address' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'body' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'capacity' => 
@@ -441,7 +441,7 @@ return array (
     ),
     'city' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'closes' => 
@@ -451,7 +451,7 @@ return array (
     ),
     'color' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'ends' => 
@@ -466,22 +466,22 @@ return array (
     ),
     'figure' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'figure_note' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'floor' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'fun_fact' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'highlights' => 
@@ -496,7 +496,7 @@ return array (
     ),
     'job_title' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'kind' => 
@@ -521,7 +521,7 @@ return array (
     ),
     'menu_class' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_depth' => 
@@ -531,17 +531,17 @@ return array (
     ),
     'menu_icon_after' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_icon_before' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_languages' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_limit' => 
@@ -556,17 +556,17 @@ return array (
     ),
     'menu_rel' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_target' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'menu_url' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'office' => 
@@ -591,7 +591,7 @@ return array (
     ),
     'page_cache_rules' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'page_password' => 
@@ -601,7 +601,7 @@ return array (
     ),
     'phone' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'photo' => 
@@ -646,7 +646,7 @@ return array (
     ),
     'seo_default_description' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'seo_default_image' => 
@@ -656,7 +656,7 @@ return array (
     ),
     'seo_description' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'seo_image' => 
@@ -676,12 +676,12 @@ return array (
     ),
     'seo_org_name' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_org_same_as' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_org_type' => 
@@ -691,22 +691,22 @@ return array (
     ),
     'seo_robots_extra' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_schema_map' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_schema_template' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_schema_type' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'seo_schemas' => 
@@ -716,22 +716,22 @@ return array (
     ),
     'seo_site_name' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'seo_title' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'seo_title_pattern' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'seo_twitter' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\SharedValue',
+      'type' => '\\LynxCms\\Core\\Pages\\SharedValue|null',
       'writable' => true,
     ),
     'show_announcements' => 
@@ -741,7 +741,7 @@ return array (
     ),
     'species' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'starts' => 
@@ -751,12 +751,12 @@ return array (
     ),
     'summary' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'tagline' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'time_zone' => 
@@ -766,7 +766,7 @@ return array (
     ),
     'title' => 
     array (
-      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue',
+      'type' => '\\LynxCms\\Core\\Pages\\TranslatableValue|null',
       'writable' => true,
     ),
     'weekday' => 
