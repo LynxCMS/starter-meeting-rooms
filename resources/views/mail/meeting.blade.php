@@ -43,9 +43,11 @@
 {{ $method === 'CANCEL' ? __('mail.ics_cancel') : __('mail.ics_request') }}
 
 @endif
-<x-mail::button :url="route($locale === 'fr' ? 'staff.mine.fr' : 'staff.mine')">
+@if ($mine)
+<x-mail::button :url="$mine">
 {{ __('mail.my_bookings') }}
 </x-mail::button>
+@endif
 
 {{ __('mail.signature') }}
 </x-mail::message>

@@ -6,7 +6,6 @@ namespace App\Bookings;
 
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
-use Illuminate\Validation\ValidationException;
 use LynxCms\Core\Support\Value;
 use Zap\Data\FrequencyConfig;
 use Zap\Facades\Zap;
@@ -78,7 +77,7 @@ final class Series
     public static function skip(Schedule $schedule, string $date): void
     {
         if (! self::isRecurring($schedule) || ! self::occursOn($schedule, $date)) {
-            throw ValidationException::withMessages(['occurrence' => "This series has no meeting on {$date}."]);
+            throw BookingRefused::because('occurrence', 'no_meeting', ['date' => $date], "This series has no meeting on {$date}.");
         }
 
         $day = CarbonImmutable::parse($date);

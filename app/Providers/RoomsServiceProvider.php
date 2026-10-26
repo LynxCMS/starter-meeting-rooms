@@ -33,6 +33,7 @@ use App\Livewire\AssistantAccess;
 use App\Livewire\BookARoom;
 use App\Livewire\MyBookings;
 use App\View\RoomSchedule;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -43,6 +44,7 @@ use LynxCms\Admin\Admin;
 use LynxCms\Admin\AdminAccess;
 use LynxCms\Admin\EditorTabs;
 use LynxCms\Admin\Navigation;
+use LynxCms\Contracts\Actions\Actor;
 use LynxCms\Core\Actions\ActionRegistry;
 use LynxCms\Core\Agents\ReadToolRegistry;
 use LynxCms\Core\Events\PageDeleted;
@@ -51,7 +53,10 @@ use LynxCms\Core\Events\PageSaved;
 use LynxCms\Core\Events\PageTemplateSwitched;
 use LynxCms\Core\Events\PageTrashed;
 use LynxCms\Core\Pages\Page;
+use LynxCms\Core\Pages\PageGates;
+use LynxCms\Core\Permissions\Authorizer;
 use LynxCms\Core\Support\Value;
+use Symfony\Component\HttpFoundation\Response;
 
 /** The meeting rooms' wiring. Each phase adds its part here. */
 final class RoomsServiceProvider extends ServiceProvider
@@ -61,6 +66,9 @@ final class RoomsServiceProvider extends ServiceProvider
         IssueKioskLink::class, RevokeKioskLink::class, IssueCalendarFeed::class, RevokeCalendarFeed::class,
         IssueAssistantToken::class, RevokeAssistantToken::class,
     ];
+
+    /** The templates of the staff's own pages, which only people who may book open. */
+    private const array STAFF_TEMPLATES = ['book', 'my-bookings'];
 
     /** What assistants read over MCP; the actions above are their tools for writing. */
     private const array READ_TOOLS = [FindFreeRoomsTool::class, RoomScheduleTool::class, MyBookingsTool::class];
@@ -95,12 +103,34 @@ final class RoomsServiceProvider extends ServiceProvider
             Route::get('me/{token}.ics', [CalendarFeedController::class, 'me'])->name('calendar.me');
         });
 
-        // The staff's booking page and their own bookings (routes/web.php).
+        // The staff's booking page and their own bookings: Lynx pages, open to people who may book.
+        app(PageGates::class)->add(fn (Page $page, Request $request): ?Response => $this->staffOnly($page, $request));
         Livewire::component('book-a-room', BookARoom::class);
         Livewire::component('my-bookings', MyBookings::class);
         Livewire::component('assistant-access', AssistantAccess::class);
 
         $this->admin();
+    }
+
+    /**
+     * The gate of the staff's pages (templates "book" and "my-bookings"): people not signed in go to
+     * sign in and come back; signed-in people who may not book get a 403.
+     */
+    private function staffOnly(Page $page, Request $request): ?Response
+    {
+        if (! in_array((string) $page->template()->name, self::STAFF_TEMPLATES, true)) {
+            return null;
+        }
+
+        $id = $request->user()?->getAuthIdentifier();
+
+        if (! is_int($id) && ! is_string($id)) {
+            return redirect()->guest(route('login'));
+        }
+
+        abort_unless(app(Authorizer::class)->allows(Actor::user($id), 'rooms.book'), 403);
+
+        return null;
     }
 
     /** The admin's Bookings screen, the Bookings and Calendar tabs of rooms and the Kiosk link tab of screens. */

@@ -23,6 +23,7 @@ final class RoomsSchemaSeeder extends Seeder
     {
         $this->fields();
         $this->templates();
+        $this->staffPages();
         $this->roles();
     }
 
@@ -101,11 +102,15 @@ final class RoomsSchemaSeeder extends Seeder
             ['name' => 'title', 'required' => true], 'body', 'photo', 'starts', 'ends',
         ], label: 'Announcement', hasUrl: false);
 
+        // The staff's own pages: booking a room and their bookings, behind a gate (RoomsServiceProvider)
+        lynx()->templates->add('book', fields: [['name' => 'title', 'required' => true], 'summary'], label: 'Book a room', singleton: true);
+        lynx()->templates->add('my-bookings', fields: [['name' => 'title', 'required' => true], 'summary'], label: 'My bookings', singleton: true);
+
         lynx()->templates->add('settings', fields: [['name' => 'title', 'required' => true], 'logo', 'accent_color'], label: 'Settings', hasUrl: false, singleton: true);
 
         // Where pages may go: the admin offers only these, and the API refuses the rest
         $children = [
-            'home' => ['practice-areas', 'team', 'news', 'offices', 'contact', 'page', 'search', 'rooms', 'screens', 'announcements', 'settings'],
+            'home' => ['practice-areas', 'team', 'news', 'offices', 'contact', 'page', 'search', 'rooms', 'screens', 'announcements', 'settings', 'book', 'my-bookings'],
             'practice-areas' => ['practice-area'], 'practice-area' => [],
             'team' => ['lawyer'], 'lawyer' => [],
             'news' => ['post'], 'post' => [],
@@ -114,6 +119,7 @@ final class RoomsSchemaSeeder extends Seeder
             'rooms' => ['room'], 'room' => [],
             'screens' => ['screen'], 'screen' => [],
             'announcements' => ['announcement'], 'announcement' => [],
+            'book' => [], 'my-bookings' => [],
         ];
 
         foreach ($children as $template => $allowed) {
@@ -138,5 +144,34 @@ final class RoomsSchemaSeeder extends Seeder
         $rooms = lynx()->pages->get('/rooms/') ?? throw new \RuntimeException('No Rooms page.');
         $rooms->{PagePasswordSchema::FIELD} = Value::string(config('rooms.section_password'));
         $rooms->save();
+    }
+
+    /**
+     * The staff's booking page and My bookings, hidden from menus, search and the sitemap. Their
+     * title and summary are fields; the booking page's Texts hold why a booking is refused.
+     */
+    private function staffPages(): void
+    {
+        $pages = [
+            ['book', 'reserver', ['en' => 'Book a room', 'fr' => 'Réserver une salle'], [
+                'en' => 'Pick a day, how long and how many seats; then a start time.',
+                'fr' => 'Choisissez un jour, une durée et un nombre de places, puis une heure.',
+            ]],
+            ['my-bookings', 'mes-reservations', ['en' => 'My bookings', 'fr' => 'Mes réservations'], [
+                'en' => 'Your meetings that have not ended yet.',
+                'fr' => 'Vos réunions qui ne sont pas terminées.',
+            ]],
+        ];
+
+        foreach ($pages as [$name, $frName, $title, $summary]) {
+            $page = lynx()->pages->new($name, '/');
+            $page->name = $name;
+            $page->title = $title['en'];
+            $page->summary = $summary['en'];
+            $page->setLanguageName('fr', $frName);
+            $page->setLanguageValue('fr', 'title', $title['fr']);
+            $page->setLanguageValue('fr', 'summary', $summary['fr']);
+            lynx()->pages->setStatus($page->save(), add: ['hidden']);
+        }
     }
 }

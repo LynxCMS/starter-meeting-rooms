@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Bookings;
 
 use App\Bookings\Booking;
+use App\Bookings\BookingRefused;
 use App\Calendar\Meeting;
 use App\Models\Room;
 use App\Models\User;
@@ -54,7 +55,7 @@ trait HandlesBookings
         $people = User::query()->whereIn('email', $emails)->pluck('id', 'email');
 
         foreach (array_diff($emails, $people->keys()->all()) as $unknown) {
-            throw ValidationException::withMessages(['attendees' => "There is no one at {$unknown} to invite."]);
+            throw BookingRefused::because('attendees', 'unknown_person', ['email' => $unknown], "There is no one at {$unknown} to invite.");
         }
 
         return array_values(array_filter(array_map(intval(...), $people->values()->all()), fn (int $id): bool => (string) $id !== (string) $organizer));

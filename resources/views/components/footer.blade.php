@@ -3,8 +3,9 @@
     $offices = lynx()->pages->find('template=office, sort=sort');
     // The rooms sit behind a password, which hides them from menus; their link leads to its form.
     $rooms = app(\LynxCms\Core\Pages\Visibility\PageVisibility::class)->withoutRules(fn () => lynx()->pages->get('/rooms/'));
-    // Signed-in staff get their booking pages instead, in the page's language.
+    // Signed-in staff get their booking pages instead (hidden pages, so menus leave them out).
     $canBook = auth()->check() && app(\LynxCms\Core\Permissions\Authorizer::class)->allows(\LynxCms\Contracts\Actions\Actor::user(auth()->id()), 'rooms.book');
+    $staffPages = $canBook ? lynx()->pages->find('template=book|my-bookings, include=hidden, sort=sort') : [];
     $fr = lynx()->languages->current()->code === 'fr';
 @endphp
 <footer class="mt-24 bg-lake-deep text-paper">
@@ -28,8 +29,9 @@
             <nav class="flex gap-5">
                 <x-lynx-menu name="footer" view="menus.footer" />
                 @if ($canBook)
-                    <a href="{{ route($fr ? 'staff.book.fr' : 'staff.book') }}" class="hover:text-paper">{{ __('staff.book_title') }}</a>
-                    <a href="{{ route($fr ? 'staff.mine.fr' : 'staff.mine') }}" class="hover:text-paper">{{ __('staff.my_bookings') }}</a>
+                    @foreach ($staffPages as $staffPage)
+                        <a href="{{ $staffPage->url() }}" class="hover:text-paper">{{ $staffPage->title }}</a>
+                    @endforeach
                     <form method="POST" action="{{ route('staff.sign-out') }}" class="inline">
                         @csrf
                         <input type="hidden" name="language" value="{{ $fr ? 'fr' : 'en' }}">

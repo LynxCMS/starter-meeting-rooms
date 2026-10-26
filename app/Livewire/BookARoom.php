@@ -80,6 +80,7 @@ final class BookARoom extends Component
         $this->until = $this->until !== '' ? $this->until : CarbonImmutable::parse($this->date)->addMonths(3)->toDateString();
         $this->booked = null;
         $this->resetErrorBag();
+        $this->refusal = null;
     }
 
     public function book(): void
@@ -114,6 +115,7 @@ final class BookARoom extends Component
             'rooms' => $rooms,
             'today' => $this->today(),
             ...$this->people(auth()->id()),
+            ...$this->pages(),
         ]);
     }
 

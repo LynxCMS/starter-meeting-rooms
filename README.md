@@ -122,9 +122,8 @@ Signed-in staff (anyone with `rooms.book`, such as `ana@meeting-rooms.example` /
 
 - **Book a room** at `/book` (`/fr/reserver`): pick an office, a day, how long, how many seats and what the room needs; each room that fits lists its free start times every quarter hour, with the gap between meetings already kept (`App\Rooms\Slots`). Pick one, name the meeting (private if needed), and it is booked through `rooms.book`.
 - **My bookings** at `/my-bookings` (`/fr/mes-reservations`): their meetings that have not ended, by day, to move, rename (`rooms.change`) or cancel (`rooms.cancel`).
-- People who are not signed in are sent to sign in (Lynx's sign-in page) and brought back. Signed-in staff see **Book a room**, **My bookings** and **Sign out** in the footer instead of **Staff**; signing out returns to the home page.
-- These are the app's own routes (`routes/web.php`), not Lynx pages, so they never appear in menus, search or the sitemap; they are `noindex`.
-- The booking rules' refusals ("That time has already passed", "Kingfisher is taken from 10:00 to 11:00…") are still in English on the French page.
+- Both are Lynx pages (templates `book` and `my-bookings`), hidden, so they never appear in menus, search or the sitemap, and `noindex`. Editors change their title and summary in both languages. A gate in `RoomsServiceProvider` sends people who are not signed in to sign in and back, and refuses people who may not book. Signed-in staff see both pages and **Sign out** in the footer instead of **Staff**; signing out returns to the home page.
+- **Refusals are texts of the booking page.** When the office's rules refuse a booking, the actions throw `App\Bookings\BookingRefused` with a reason and its values (the room, the times, the minutes). The booking page and My bookings show it as one of the booking page's Texts (`refusal.*`, in `livewire/partials/refusal.blade.php`), which editors reword in English and French; values go in through `@string`'s `replace:`. The admin, MCP clients and agents keep the actions' English messages.
 
 ### Repeating meetings
 

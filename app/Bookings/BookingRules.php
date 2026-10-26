@@ -7,7 +7,6 @@ namespace App\Bookings;
 use App\Models\Room;
 use App\Rooms\OpeningHours;
 use Carbon\CarbonImmutable;
-use Illuminate\Validation\ValidationException;
 use LynxCms\Core\Pages\Page;
 use LynxCms\Core\Support\Value;
 use Zap\Exceptions\ScheduleConflictException;
@@ -24,7 +23,7 @@ final class BookingRules
     /**
      * $date may be past for a whole series, whose rules apply to its weekday, not one date.
      *
-     * @throws ValidationException
+     * @throws BookingRefused
      */
     public static function check(Room $room, string $date, string $from, string $to, bool $isBlock = false, bool $allowPast = false): void
     {
@@ -33,10 +32,10 @@ final class BookingRules
         $max = Value::int(config('rooms.max_minutes'), 240);
 
         match (true) {
-            $minutes <= 0 => throw ValidationException::withMessages(['to' => 'A meeting must end after it starts.']),
-            ! $isBlock && $minutes < $min => throw ValidationException::withMessages(['to' => "A meeting lasts at least {$min} minutes."]),
-            ! $isBlock && $minutes > $max => throw ValidationException::withMessages(['to' => 'A meeting lasts at most '.self::duration($max).'.']),
-            ! $allowPast && CarbonImmutable::parse("{$date} {$from}", $room->timeZone())->isPast() => throw ValidationException::withMessages(['date' => 'That time has already passed.']),
+            $minutes <= 0 => throw BookingRefused::because('to', 'backwards', [], 'A meeting must end after it starts.'),
+            ! $isBlock && $minutes < $min => throw BookingRefused::because('to', 'too_short', ['minutes' => $min], "A meeting lasts at least {$min} minutes."),
+            ! $isBlock && $minutes > $max => throw BookingRefused::because('to', 'too_long', ['minutes' => $max], 'A meeting lasts at most '.self::duration($max).'.'),
+            ! $allowPast && CarbonImmutable::parse("{$date} {$from}", $room->timeZone())->isPast() => throw BookingRefused::because('date', 'past', [], 'That time has already passed.'),
             default => self::checkOpen($room, $date, $from, $to),
         };
     }
@@ -44,22 +43,24 @@ final class BookingRules
     /**
      * Zap's conflict, as a message about the room: "Atlas is taken from 10:00 to 11:00."
      */
-    public static function conflict(Room $room, ScheduleConflictException $exception): ValidationException
+    public static function conflict(Room $room, ScheduleConflictException $exception): BookingRefused
     {
-        $times = [];
+        $periods = [];
 
         foreach ($exception->getConflictingSchedules() as $schedule) {
             if ($schedule instanceof Schedule) {
                 $booking = Booking::fromSchedule($schedule->loadMissing('periods'));
-                $times[] = "from {$booking->from} to {$booking->to}";
+                $periods[] = [$booking->from, $booking->to];
             }
         }
 
+        $periods = array_values(array_unique($periods, SORT_REGULAR));
         $name = self::name($room);
-        $taken = $times === [] ? "{$name} is taken then." : "{$name} is taken ".implode(' and ', array_unique($times)).'.';
+        $taken = $periods === [] ? "{$name} is taken then." : "{$name} is taken ".implode(' and ', array_map(fn (array $period): string => "from {$period[0]} to {$period[1]}", $periods)).'.';
         $buffer = Value::int(config('rooms.buffer_minutes'), 0);
+        $values = ['room' => $name, 'times' => implode(', ', array_map(fn (array $period): string => "{$period[0]}–{$period[1]}", $periods)), 'buffer' => $buffer];
 
-        return ValidationException::withMessages(['from' => $buffer > 0 ? "{$taken} It needs {$buffer} minutes between meetings." : $taken]);
+        return BookingRefused::because('from', 'taken', $values, $buffer > 0 ? "{$taken} It needs {$buffer} minutes between meetings." : $taken);
     }
 
     private static function checkOpen(Room $room, string $date, string $from, string $to): void
@@ -70,13 +71,14 @@ final class BookingRules
         $plural = ucfirst($weekday).'s';
 
         if ($hours === []) {
-            throw ValidationException::withMessages(['date' => self::name($room)." is closed on {$plural}."]);
+            throw BookingRefused::because('date', 'closed', ['room' => self::name($room), 'date' => $date], self::name($room)." is closed on {$plural}.");
         }
 
         if (! array_any($hours, fn (array $group): bool => $from >= $group['opens'] && $to <= $group['closes'])) {
             $open = implode(' and ', array_map(fn (array $group): string => "from {$group['opens']} to {$group['closes']}", $hours));
+            $values = ['room' => self::name($room), 'date' => $date, 'hours' => implode(', ', array_map(fn (array $group): string => "{$group['opens']}–{$group['closes']}", $hours))];
 
-            throw ValidationException::withMessages(['from' => self::name($room)." is open {$open} on {$plural}."]);
+            throw BookingRefused::because('from', 'closed_then', $values, self::name($room)." is open {$open} on {$plural}.");
         }
     }
 

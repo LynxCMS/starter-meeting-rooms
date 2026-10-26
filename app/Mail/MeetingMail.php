@@ -55,7 +55,16 @@ final class MeetingMail extends Mailable implements ShouldQueue
 
     public function content(): Content
     {
-        return new Content(markdown: 'mail.meeting', with: ['summary' => $this->summary, 'when' => $this->moment()]);
+        return new Content(markdown: 'mail.meeting', with: ['summary' => $this->summary, 'when' => $this->moment(), 'mine' => $this->myBookings()]);
+    }
+
+    /** The address of My bookings in the mail's language, or null when the site has no such page. */
+    private function myBookings(): ?string
+    {
+        $language = lynx()->languages->find((string) $this->locale) !== null ? (string) $this->locale : (string) lynx()->languages->default()->code;
+        $page = lynx()->pages->find('template=my-bookings, include=hidden')->first();
+
+        return $page === null ? null : url(lynx()->language($language, fn (): string => $page->url()));
     }
 
     /** @return list<Attachment> */

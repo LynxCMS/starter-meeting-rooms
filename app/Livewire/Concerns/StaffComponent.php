@@ -4,19 +4,32 @@ declare(strict_types=1);
 
 namespace App\Livewire\Concerns;
 
+use App\Bookings\BookingRefused;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Locked;
 use LynxCms\Contracts\Actions\Actor;
 use LynxCms\Core\Languages\LanguageContext;
+use LynxCms\Core\Pages\Page;
 use LynxCms\Core\Permissions\Authorizer;
 
 /**
- * What the staff's booking components share. Livewire answers at its own address, without the
- * page's /fr prefix, so the component keeps the visitor's language and restores it on every
- * request; and it checks, on every request too, that a signed-in person may book rooms.
+ * What the staff's booking components share. They sit on Lynx pages (templates "book" and
+ * "my-bookings"), whose Page Texts their views use, so they keep the page's id. Livewire answers
+ * at its own address, without the page's /fr prefix, so the component keeps the visitor's
+ * language and restores it on every request; and it checks, on every request too, that a
+ * signed-in person may book rooms. A refusal by the office's rules is kept with its reason and
+ * values, which the view shows as the booking page's own text.
  */
 trait StaffComponent
 {
     public string $lang = '';
+
+    /** The Lynx page the component sits on. */
+    #[Locked]
+    public int $pageId = 0;
+
+    /** @var array{reason: string, values: array<string, string|int>}|null the last refusal, if the rules gave one */
+    public ?array $refusal = null;
 
     public function bootStaffComponent(): void
     {
@@ -45,10 +58,15 @@ trait StaffComponent
     private function attemptAction(string $action, array $input): bool
     {
         $this->resetErrorBag();
+        $this->refusal = null;
 
         try {
             lynx()->run($action, $input);
         } catch (ValidationException $exception) {
+            if ($exception instanceof BookingRefused) {
+                $this->refusal = ['reason' => $exception->reason, 'values' => $exception->values];
+            }
+
             foreach ($exception->errors() as $field => $messages) {
                 $this->addError($field, $messages[0] ?? 'Not valid.');
             }
@@ -57,5 +75,19 @@ trait StaffComponent
         }
 
         return true;
+    }
+
+    /**
+     * What the view needs besides the component's own data: the page it sits on, for its Page
+     * Texts, and the booking page, whose texts say why a booking was refused on either page.
+     *
+     * @return array{page: Page|null, bookingPage: Page|null}
+     */
+    private function pages(): array
+    {
+        return [
+            'page' => $this->pageId > 0 ? lynx()->pages->get($this->pageId) : null,
+            'bookingPage' => lynx()->pages->find('template=book, include=hidden')->first(),
+        ];
     }
 }

@@ -90,7 +90,9 @@
                         <label class="flex items-center gap-2 text-sm sm:col-span-2">
                             <input type="checkbox" wire:model="private" class="size-4 accent-[var(--color-copper)]"> {{ __('staff.private') }}
                         </label>
-                        @if ($errors->any())
+                        @if ($refusal)
+                            @include('livewire.partials.refusal', ['page' => $bookingPage, 'message' => $errors->first(), 'span' => 'sm:col-span-2'])
+                        @elseif ($errors->any())
                             <p class="text-sm font-medium text-copper sm:col-span-2" role="alert">{{ $errors->first() }}</p>
                         @endif
                     </form>

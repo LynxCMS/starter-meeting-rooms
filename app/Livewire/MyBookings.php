@@ -29,6 +29,9 @@ final class MyBookings extends Component
     use InvitesPeople;
     use StaffComponent;
 
+    /** The booking page's refusal texts, which this page shows too (see its view). */
+    public const string REFUSAL_VIEW = 'livewire.partials.refusal';
+
     /** How far ahead the dates of series are listed. */
     public const int WEEKS_AHEAD = 6;
 
@@ -55,6 +58,7 @@ final class MyBookings extends Component
         $this->inviteIds($booking->attendees);
         $this->notice = null;
         $this->resetErrorBag();
+        $this->refusal = null;
     }
 
     public function save(): void
@@ -124,6 +128,7 @@ final class MyBookings extends Component
             'feed' => CalendarFeed::forUser((int) auth()->id()),
             'names' => User::query()->pluck('name', 'id')->all(),
             ...$this->people(auth()->id()),
+            ...$this->pages(),
         ]);
     }
 

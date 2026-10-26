@@ -39,7 +39,10 @@
                                 @if (\App\Livewire\MyBookings::mayInvite($editing))
                                     <div class="sm:col-span-4">@include('livewire.partials.invite')</div>
                                 @endif
-                                @if ($errors->any())
+                                {{-- The refusal texts belong to the booking page: included by a constant, so this page's Texts tab doesn't list them again. --}}
+                                @if ($refusal)
+                                    @include(\App\Livewire\MyBookings::REFUSAL_VIEW, ['page' => $bookingPage, 'message' => $errors->first(), 'span' => 'sm:col-span-4'])
+                                @elseif ($errors->any())
                                     <p class="text-sm font-medium text-copper sm:col-span-4" role="alert">{{ $errors->first() }}</p>
                                 @endif
                                 <div class="flex flex-wrap gap-3 sm:col-span-4">
