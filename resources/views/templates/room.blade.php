@@ -4,7 +4,7 @@
     <x-page-header :title="$page->title" :back="$page->parent()">
         <p class="mt-4 flex flex-wrap items-center gap-3 text-muted">
             <span class="size-3 rounded-full" style="background: {{ $page->color ?: 'var(--color-lake)' }}"></span>
-            {{ trans_choice('site.rooms.seats', (int) $page->capacity, locale: lynx()->languages->current()->code) }} · {{ $page->floor }} · {{ $page->office?->city }}@if ($page->equipment->count()) · {{ implode(' · ', $page->equipment->labels()) }}@endif
+            {{ trans_choice('site.rooms.seats', (int) $page->capacity) }} · {{ $page->floor }} · {{ $page->office?->city }}@if ($page->equipment->count()) · {{ implode(' · ', $page->equipment->labels()) }}@endif
         </p>
     </x-page-header>
 

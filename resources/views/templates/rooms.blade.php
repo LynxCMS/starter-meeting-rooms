@@ -15,7 +15,7 @@
                                 <span class="mt-1.5 size-4 shrink-0 rounded-full" style="background: {{ $room->color ?: 'var(--color-lake)' }}"></span>
                                 <span>
                                     <span class="block font-display text-2xl group-hover:text-copper">{{ $room->title }}</span>
-                                    <span class="mt-1 block text-sm text-muted">{{ trans_choice('site.rooms.seats', (int) $room->capacity, locale: lynx()->languages->current()->code) }} · {{ $room->floor }}</span>
+                                    <span class="mt-1 block text-sm text-muted">{{ trans_choice('site.rooms.seats', (int) $room->capacity) }} · {{ $room->floor }}</span>
                                     @if ($room->equipment->count())
                                         <span class="mt-3 block text-sm">{{ implode(' · ', $room->equipment->labels()) }}</span>
                                     @endif

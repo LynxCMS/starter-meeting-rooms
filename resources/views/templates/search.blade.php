@@ -2,8 +2,6 @@
     Search: the words in ?q, looked up in Lynx's search index (titles, summaries, texts, species and
     fun facts) in the visitor's language. Pages a visitor may not see, such as the staff's rooms,
     never show. Results are never stored by the page cache (SiteFeaturesSeeder).
-    Plurals pass the language code: trans_choice() checks the regional locale (fr-CA) on its own and
-    would fall back to English, where __() finds lang/fr through Lynx.
 --}}
 @php
     $query = trim(Str::limit((string) request()->query('q', ''), 100, ''));
@@ -23,7 +21,7 @@
 
     <div class="mx-auto max-w-6xl px-5 sm:px-8">
         @if ($results !== null)
-            <p class="text-muted" role="status">{{ trans_choice('site.search.found', $results->count(), ['count' => $results->count(), 'query' => $query], lynx()->languages->current()->code) }}</p>
+            <p class="text-muted" role="status">{{ trans_choice('site.search.found', $results->count(), ['count' => $results->count(), 'query' => $query]) }}</p>
             <ul class="mt-6">
                 @foreach ($results as $result)
                     <li class="group relative wave-rule py-6">

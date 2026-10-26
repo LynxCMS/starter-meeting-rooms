@@ -17,7 +17,7 @@
             <span class="eyebrow text-copper">{{ __('staff.length') }}</span>
             <select wire:model.live="minutes" class="rounded-full border border-ink/15 bg-paper px-4 py-2.5">
                 @foreach (\App\Livewire\BookARoom::LENGTHS as $length)
-                    <option value="{{ $length }}">{{ trans_choice('staff.minutes', $length, ['count' => $length], lynx()->languages->current()->code) }}</option>
+                    <option value="{{ $length }}">{{ trans_choice('staff.minutes', $length, ['count' => $length]) }}</option>
                 @endforeach
             </select>
         </label>
@@ -52,7 +52,7 @@
                     <h2 class="flex items-center gap-3 font-display text-2xl">
                         <span class="size-3 rounded-full" style="background: {{ $room->color ?: 'var(--color-lake)' }}"></span>{{ $room->title }}
                     </h2>
-                    <p class="text-sm text-muted">{{ trans_choice('site.rooms.seats', (int) $room->capacity, ['count' => $room->capacity], lynx()->languages->current()->code) }} · {{ $room->floor }}</p>
+                    <p class="text-sm text-muted">{{ trans_choice('site.rooms.seats', (int) $room->capacity, ['count' => $room->capacity]) }} · {{ $room->floor }}</p>
                 </div>
 
                 @if ($slots === [])
