@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Database\Seeders\DatabaseSeeder;
 use Database\Seeders\SiteSchemaSeeder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 beforeEach(function (): void {
     $this->withoutVite();
-    $this->seed(DatabaseSeeder::class);
+    seedDemo();
 });
 
 it('draws no straight lines: rows are divided and sections edged by waves', function (): void {

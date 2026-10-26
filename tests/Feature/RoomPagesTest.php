@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 use App\Models\Room;
 use App\Rooms\FreeTimes;
-use Database\Seeders\DatabaseSeeder;
 
 /* The public pages: the rooms, and each room's hours and free times. */
 
 beforeEach(function (): void {
     $this->withoutVite();
-    $this->seed(DatabaseSeeder::class);
+    seedDemo();
     unlockRooms($this);
 });
 

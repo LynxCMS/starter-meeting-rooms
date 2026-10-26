@@ -3,13 +3,12 @@
 declare(strict_types=1);
 
 use App\Models\Room;
-use Database\Seeders\DatabaseSeeder;
 use LynxCms\Core\Pages\Page;
 use LynxCms\Core\Pages\Visibility\PageVisibility;
 
 /* The seeded firm: two offices, two rooms each with their hours, a lobby per office and a door screen per room. */
 
-beforeEach(fn () => $this->seed(DatabaseSeeder::class));
+beforeEach(fn () => seedDemo());
 
 it('seeds four rooms, each with a room for Zap', function (): void {
     expect(Room::query()->count())->toBe(4)

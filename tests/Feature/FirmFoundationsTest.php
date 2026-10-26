@@ -7,7 +7,6 @@ use App\Bookings\Booking;
 use App\Models\Room;
 use App\Models\User;
 use Carbon\CarbonImmutable;
-use Database\Seeders\DatabaseSeeder;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Validation\ValidationException;
 use LynxCms\PagePassword\PagePasswordSchema;
@@ -19,7 +18,7 @@ use LynxCms\PagePassword\PagePasswordSchema;
 
 beforeEach(function (): void {
     $this->withoutVite();
-    $this->seed(DatabaseSeeder::class);
+    seedDemo();
 });
 
 it('speaks English and Canadian French', function (): void {

@@ -7,7 +7,6 @@ use App\Bookings\Booking;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Validation\ValidationException;
 use LynxCms\Contracts\Actions\ActionHalted;
-use LynxCms\Contracts\Actions\Actor;
 use Zap\Models\Schedule;
 
 /*
@@ -21,12 +20,6 @@ beforeEach(function (): void {
     roomPage('atlas', ['monday' => ['09:00', '18:00'], 'tuesday' => ['09:00', '18:00']]);
     $this->ana = person('staff', 'Ana');
 });
-
-/** @param array<string, mixed> $input */
-function book(Actor $actor, array $input = []): Booking
-{
-    return runAs($actor, BookRoom::class, $input + ['room' => '/rooms/atlas/', 'date' => '2026-11-02', 'from' => '10:00', 'to' => '11:00', 'title' => 'Planning'])->valueAs(Booking::class);
-}
 
 it('books a room for its organizer', function (): void {
     $booking = book($this->ana);

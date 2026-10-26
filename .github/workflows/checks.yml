@@ -6,6 +6,11 @@ on:
     branches: [main]
   pull_request:
 
+# A new push to a pull request cancels its run in progress; runs on main always finish.
+concurrency:
+  group: checks-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -16,25 +21,41 @@ jobs:
         with:
           php-version: '8.5'
           extensions: sqlite3, pdo_sqlite, intl
+          coverage: none
           tools: composer:v2
+
+      # vendor/ from the last run with the same lock file, so composer install only checks it.
+      - uses: actions/cache@v6
+        with:
+          path: vendor
+          key: vendor-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          restore-keys: vendor-${{ runner.os }}-
+
+      - run: composer install --prefer-dist --no-interaction --no-progress
 
       - uses: actions/setup-node@v7
         with:
           node-version: '22'
+          cache: npm
 
-      - name: Install
-        run: |
-          composer install --no-interaction --prefer-dist
-          npm ci
-          npm run build
-          cp .env.example .env
-          php artisan key:generate
+      - name: Build the CSS and JavaScript
+        run: npm ci && npm run build
+
+      - run: cp .env.example .env && php artisan key:generate
 
       - name: Pint
         run: vendor/bin/pint --test
 
+      # PHPStan's result cache, keyed by the code, so an unchanged file is not analysed again.
+      - uses: actions/cache@v6
+        with:
+          path: /tmp/phpstan
+          key: phpstan-${{ runner.os }}-${{ github.sha }}
+          restore-keys: phpstan-${{ runner.os }}-
+
       - name: PHPStan
         run: vendor/bin/phpstan analyse --no-progress
 
+      # One process per core. Tests on the seeded firm share one seeded copy per process (seedDemo).
       - name: Tests
-        run: php artisan test --compact
+        run: php artisan test --parallel --compact

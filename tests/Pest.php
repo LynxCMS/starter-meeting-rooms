@@ -2,12 +2,18 @@
 
 declare(strict_types=1);
 
+use App\Actions\Bookings\BookRoom;
+use App\Bookings\Booking;
 use App\Models\User;
 use Carbon\CarbonImmutable;
+use Database\Seeders\DatabaseSeeder;
 use Database\Seeders\RoomsSchemaSeeder;
 use Database\Seeders\SiteSchemaSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\ParallelTesting;
 use LynxCms\Contracts\Actions\Actor;
 use LynxCms\Core\Actions\Roles\AssignRoles;
 use LynxCms\Core\Actions\Runner\ActionResult;
@@ -19,6 +25,15 @@ pest()->extend(TestCase::class)->use(RefreshDatabase::class)->in('Feature');
 
 // Every test runs on the morning of Monday 26 October 2026, so dates in tests stay in the future.
 pest()->beforeEach(fn () => test()->travelTo(CarbonImmutable::parse('2026-10-26 08:00')))->in('Feature');
+
+// A test on the seeded firm (seedDemo) hands the default connection back before RefreshDatabase
+// rolls the in-memory one back, or it would find no transaction there and migrate again.
+pest()->afterEach(function (): void {
+    if (config('database.default') === 'demo') {
+        DB::disconnect('demo');
+        config(['database.default' => 'sqlite']);
+    }
+})->in('Feature');
 
 /** Lynx installed with the firm's schema (site and rooms): languages, templates, fields, roles. */
 function roomsSchema(): void
@@ -108,4 +123,50 @@ function unlockRooms(mixed $test): void
     $response = $test->post('/lynx-page-password/unlock', ['page' => $rooms?->id, 'password' => config('rooms.section_password'), 'language' => 'en']);
     // The test client keeps no cookies between requests; the browser would.
     $test->withCookie(Unlocks::COOKIE, (string) $response->getCookie(Unlocks::COOKIE)?->getValue());
+}
+
+/**
+ * Books a room as $actor: Atlas on Monday 2 November 2026, 10:00 to 11:00, unless $input says otherwise.
+ *
+ * @param  array<string, mixed>  $input
+ */
+function book(Actor $actor, array $input = []): Booking
+{
+    return runAs($actor, BookRoom::class, $input + ['room' => '/rooms/atlas/', 'date' => '2026-11-02', 'from' => '10:00', 'to' => '11:00', 'title' => 'Planning'])->valueAs(Booking::class);
+}
+
+/**
+ * The seeded firm (DatabaseSeeder), from a copy: the demo is seeded once per test process into an
+ * SQLite file, and each test that asks gets a fresh copy of that file as its database, in
+ * milliseconds instead of seconds.
+ */
+function seedDemo(): void
+{
+    static $isBuilt = false;
+    $folder = storage_path('framework/testing');
+    $snapshot = $folder.'/demo-'.(ParallelTesting::token() ?: '0').'.sqlite';
+    $work = $folder.'/demo-'.(ParallelTesting::token() ?: '0').'-test.sqlite';
+
+    if (! $isBuilt) {
+        File::ensureDirectoryExists($folder);
+        File::put($snapshot, '');
+        useDatabaseFile($snapshot);
+        Artisan::call('migrate', ['--force' => true]);
+        test()->seed(DatabaseSeeder::class);
+        DB::disconnect('demo');
+        $isBuilt = true;
+    }
+
+    File::copy($snapshot, $work);
+    useDatabaseFile($work);
+}
+
+/**
+ * Makes a database file the default connection for the rest of the test. A connection of its own,
+ * since RefreshDatabase keeps the in-memory one.
+ */
+function useDatabaseFile(string $path): void
+{
+    config(['database.connections.demo' => ['database' => $path] + config('database.connections.sqlite'), 'database.default' => 'demo']);
+    DB::purge('demo');
 }
