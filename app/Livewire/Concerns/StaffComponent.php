@@ -79,15 +79,17 @@ trait StaffComponent
 
     /**
      * What the view needs besides the component's own data: the page it sits on, for its Page
-     * Texts, and the booking page, whose texts say why a booking was refused on either page.
+     * Texts; the booking page, whose texts say why a booking was refused on either page; and the
+     * My bookings page, linked from a booking's confirmation.
      *
-     * @return array{page: Page|null, bookingPage: Page|null}
+     * @return array{page: Page|null, bookingPage: Page|null, myBookingsPage: Page|null}
      */
     private function pages(): array
     {
         return [
             'page' => $this->pageId > 0 ? lynx()->pages->get($this->pageId) : null,
             'bookingPage' => lynx()->pages->find('template=book, include=hidden')->first(),
+            'myBookingsPage' => lynx()->pages->find('template=my-bookings, include=hidden')->first(),
         ];
     }
 }

@@ -40,7 +40,9 @@
         @if ($booked)
             <p class="rounded-[1.5rem] bg-reed-pale px-6 py-4" role="status">
                 {{ __('staff.booked', ['room' => $booked['room'], 'day' => \Carbon\CarbonImmutable::parse($booked['date'])->locale(app()->getLocale())->isoFormat('dddd LL'), 'from' => $booked['from'], 'to' => $booked['to']]) }}
-                <a href="{{ route(lynx()->languages->current()->code === 'fr' ? 'staff.mine.fr' : 'staff.mine') }}" class="link-wave ml-1 font-medium">{{ __('staff.my_bookings') }}</a>
+                @if ($myBookingsPage)
+                    <a href="{{ $myBookingsPage->url() }}" class="link-wave ml-1 font-medium">{{ __('staff.my_bookings') }}</a>
+                @endif
             </p>
         @endif
 
