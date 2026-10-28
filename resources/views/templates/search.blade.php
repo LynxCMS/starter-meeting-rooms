@@ -4,7 +4,9 @@
     never show. Results are never stored by the page cache (SiteFeaturesSeeder).
 --}}
 @php
-    $query = trim(Str::limit((string) request()->query('q', ''), 100, ''));
+    // A visitor can send an array (?q[]=x), which (string) would turn into an error.
+    $query = request()->query('q');
+    $query = is_string($query) ? trim(Str::limit($query, 100, '')) : '';
     // Quotes would end the selector's value; words are what the index matches anyway.
     $words = trim(preg_replace('/["\\\\]+/', ' ', $query) ?? '');
     $results = $words === '' ? null : lynx()->pages->find('search*="'.$words.'", limit=30');

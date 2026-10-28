@@ -40,6 +40,10 @@ it('shows every page of the site in both languages', function (string $en, strin
     'privacy' => ['/privacy', '/fr/confidentialite'],
 ]);
 
+it('answers a search whose words come as a list', function (): void {
+    $this->get('/search?q[]=beaver')->assertOk();
+});
+
 it('lists the team by role, founding partners first and paralegals last', function (): void {
     $this->get('/team')->assertOk()->assertSeeInOrder(['Castor Bélanger', 'Hélène Héron', 'Pascale Brochet', 'Darcy Libellule']);
 });
