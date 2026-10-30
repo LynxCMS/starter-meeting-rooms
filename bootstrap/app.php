@@ -14,7 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
     // Listeners are registered in the service providers, so none is discovered (and run) twice.
     ->withEvents(discover: false)
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // In production the site sits behind a proxy (Traefik, Cloudflare) that ends HTTPS, and
+        // only that proxy can reach the container, so its forwarded scheme and host are trusted.
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

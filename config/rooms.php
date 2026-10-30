@@ -3,6 +3,17 @@
 declare(strict_types=1);
 
 return [
+    // For the public demo only, where anyone may sign in: every hour the site goes back to the seeded
+    // firm and drops uploads (rooms:reset-demo), and the admin's sidebar says so.
+    'demo_reset' => (bool) env('SITE_DEMO_RESET', false),
+
+    // The accounts the demo's sign-in page offers, one click each, and where each one lands.
+    'demo_accounts' => [
+        'admin' => ['label' => 'Admin', 'email' => 'owner@meeting-rooms.example', 'home' => '/lynx/pages'],
+        'editor' => ['label' => 'Editor', 'email' => 'mia@meeting-rooms.example', 'home' => '/lynx/bookings'],
+        'staff' => ['label' => 'Staff', 'email' => 'ana@meeting-rooms.example', 'home' => '/book'],
+    ],
+
     // Password of the demo owner the seeder creates (owner@meeting-rooms.example).
     'owner_password' => env('ROOMS_OWNER_PASSWORD', 'change-me-now'),
 

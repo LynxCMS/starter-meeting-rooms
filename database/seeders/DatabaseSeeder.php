@@ -27,5 +27,9 @@ final class DatabaseSeeder extends Seeder
         Artisan::call('lynx:install', ['--user' => (string) $owner->id]);
 
         $this->call([SiteSchemaSeeder::class, RoomsSchemaSeeder::class, RoomsContentSeeder::class, SiteContentSeeder::class, SiteFeaturesSeeder::class, BookingsSeeder::class]);
+
+        if (config('rooms.demo_reset') === true) {
+            $this->call(DemoFloorSeeder::class);
+        }
     }
 }

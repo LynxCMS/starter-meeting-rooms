@@ -49,3 +49,6 @@ Artisan::command('rooms:backup-database', function () {
 })->purpose('Copy the SQLite database to storage/app/private/backups');
 
 Schedule::command('rooms:backup-database')->dailyAt('02:30')->withoutOverlapping();
+
+// The public demo goes back to its seeded firm every hour (config rooms.demo_reset).
+Schedule::command('rooms:reset-demo')->hourly()->when(fn (): bool => config('rooms.demo_reset') === true);

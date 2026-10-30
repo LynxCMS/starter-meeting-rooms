@@ -28,6 +28,9 @@
             <p>© {{ now()->year }} @string('footer.copyright', ['en' => 'Castor & Otters, Inc. Not your lawyers until we say so, in writing.', 'fr' => 'Castor & Otters, inc. Pas encore vos avocats, sauf par écrit.'], label: 'Footer copyright, after the year', scope: 'site')</p>
             <nav class="flex gap-5">
                 <x-lynx-menu name="footer" view="menus.footer" />
+                @if (config('rooms.demo_reset') === true)
+                    <a href="{{ route('demo.screens') }}" class="hover:text-paper">Room screens</a>
+                @endif
                 @if ($canBook)
                     @foreach ($staffPages as $staffPage)
                         <a href="{{ $staffPage->url() }}" class="hover:text-paper">{{ $staffPage->title }}</a>

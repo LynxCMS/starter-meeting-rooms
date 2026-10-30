@@ -200,6 +200,30 @@ php artisan queue:restart
 
 Run the same steps for each new version. Templates and fields are made by the seeders; once the site is live, change them in the admin, or export them with `php artisan lynx:schema:export` in development and run `php artisan lynx:schema:apply --dry-run`, then `lynx:schema:apply`, on the server.
 
+### Docker
+
+The repository has a `Dockerfile`: one image with PHP, the web server on port 80, the scheduler and the queue worker, so cron and Supervisor aren't needed. On its first start it migrates and seeds the demo firm.
+
+```bash
+docker build -t castor-otters .
+docker run -p 8000:80 -v castor-otters:/app/storage \
+  -e APP_KEY="$(php artisan key:generate --show)" \
+  -e APP_URL=http://localhost:8000 \
+  -e ROOMS_OWNER_PASSWORD=choose-one \
+  -e SITE_DEMO_RESET=true \
+  castor-otters
+```
+
+| Setting | What it does |
+| --- | --- |
+| `APP_KEY` | Required. A key from `php artisan key:generate --show`. Keep it: changing it signs everyone out and breaks feed addresses. |
+| `APP_URL` | The site's address. Kiosk links and images are built from it. |
+| `ROOMS_OWNER_PASSWORD` | The owner's password for the first seed. The seed's staff accounts use the password `password`, so a real firm deletes them. |
+| `SITE_DEMO_RESET` | `true` only for a public demo where anyone may sign in. The sign-in page gets one button each for Admin, Editor (Mia, a manager) and Staff (Ana), with no password. `/demo/screens` lists every screen with a link anyone may open, and the rooms stay open round the clock with meetings around each reset, so the screens show something at any hour. Every hour the site goes back to the seeded firm, deleting edits, bookings and uploads, and the admin's sidebar says so. |
+| `MAIL_MAILER` | `log` in the image, so a demo never mails anyone. Set a real mailer for a real firm. |
+
+On Dokploy, Coolify or similar: build from the `Dockerfile`, set the variables above, mount a volume at `/app/storage`, and give the domain HTTPS with container port `80`. A change of variables takes effect after a rebuild or redeploy.
+
 ### Backups
 
 Two kinds, both kept on the server, so copy them elsewhere too:
