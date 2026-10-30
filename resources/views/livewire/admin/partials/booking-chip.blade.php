@@ -6,7 +6,7 @@
             'bg-card' => ! $booking->isBlocked,
         ])>
     <span class="block font-medium tabular-nums">{{ $booking->from }}–{{ $booking->to }}@if ($booking->repeats) <span class="text-muted-foreground" title="Repeats {{ $booking->repeats }}">↻</span>@endif</span>
-    <span class="block truncate">
+    <span class="block truncate" title="{{ $booking->title }}">
         @if ($booking->isBlocked)
             Blocked: {{ $booking->title }}
         @else

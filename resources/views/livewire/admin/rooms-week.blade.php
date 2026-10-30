@@ -54,7 +54,7 @@
                             @foreach ($days as $day)
                                 @php($date = $day->toDateString())
                                 <td class="group border-l px-2 py-2">
-                                    <div class="grid gap-1.5">
+                                    <div class="grid grid-cols-1 gap-1.5">
                                         @foreach ($grid[(int) $room->id][$date] ?? [] as $booking)
                                             @include('livewire.admin.partials.booking-chip', ['booking' => $booking])
                                         @endforeach

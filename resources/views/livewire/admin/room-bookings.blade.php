@@ -23,7 +23,7 @@
     <div class="grid gap-3 sm:grid-cols-5">
         @foreach ($days as $day)
             @php($date = $day->toDateString())
-            <section class="grid content-start gap-2 rounded-xl border p-3">
+            <section class="grid grid-cols-1 content-start gap-2 rounded-xl border p-3">
                 <h3 @class(['text-sm font-medium', 'text-primary' => $date === $today])>
                     {{ $day->format('D j M') }}@if ($date === $today) · today @endif
                 </h3>
