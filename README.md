@@ -1,5 +1,15 @@
 # Castor & Otters, Inc., a Lynx starter
 
+**[See the live demo at meeting-rooms.lynxcms.org](https://meeting-rooms.lynxcms.org/)**, in English and [French](https://meeting-rooms.lynxcms.org/fr). The [room screens](https://meeting-rooms.lynxcms.org/demo/screens) show its lobby TVs and door tablets.
+
+### Try the admin
+
+Open the [demo admin](https://meeting-rooms.lynxcms.org/lynx) and choose **Admin**, **Editor** or **Staff** on the sign-in page. No password is needed.
+
+Anyone can sign in, so the demo goes back to its original content at the start of every hour. Your edits and uploads are deleted then.
+
+---
+
 The website of a law firm specialized in wildlife, in Vancouver and Montreal, with its meeting rooms on screens: a lobby TV per office and a tablet at each door. Staff book rooms on the site, in the admin, or by asking their AI assistant. Built on [Lynx CMS](https://lynxcms.org/cms/docs/) with [Laravel Zap](https://www.laravel-zap.com/) for calendars.
 
 It is the code of the guide [Build a meeting rooms app](https://lynxcms.org/cms/docs/guides/meeting-rooms/), which explains how Lynx serves as the base of an application: rooms are pages, bookings are actions, and the admin, the screens, the staff's pages and AI assistants all go through them. When Lynx releases a new version, this repository is updated to it and its tests run.
