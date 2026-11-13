@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "90e7501c167e4d6e7511c029ae4b043d",
+    "content-hash": "6ed07eaa6984fff3480e8034bbe0b1b9",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2932,16 +2932,16 @@
         },
         {
             "name": "lynxcms/admin",
-            "version": "v0.1.42",
+            "version": "v0.1.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LynxCMS/admin.git",
-                "reference": "56a712efa994c1604c81bba17c2631c93fc312b1"
+                "reference": "5abbcb729ef3d372cd18c56695f0a53d7168bea1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LynxCMS/admin/zipball/56a712efa994c1604c81bba17c2631c93fc312b1",
-                "reference": "56a712efa994c1604c81bba17c2631c93fc312b1",
+                "url": "https://api.github.com/repos/LynxCMS/admin/zipball/5abbcb729ef3d372cd18c56695f0a53d7168bea1",
+                "reference": "5abbcb729ef3d372cd18c56695f0a53d7168bea1",
                 "shasum": ""
             },
             "require": {
@@ -2973,14 +2973,14 @@
             ],
             "description": "Livewire admin for Lynx CMS.",
             "support": {
-                "source": "https://github.com/LynxCMS/admin/tree/v0.1.42"
+                "source": "https://github.com/LynxCMS/admin/tree/v0.1.43"
             },
-            "time": "2026-11-13T20:08:17+00:00",
-            "published-time": "2026-11-13T20:08:25+00:00"
+            "time": "2026-11-13T22:02:52+00:00",
+            "published-time": "2026-11-13T22:03:00+00:00"
         },
         {
             "name": "lynxcms/cache",
-            "version": "v0.1.42",
+            "version": "v0.1.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LynxCMS/cache.git",
@@ -3019,14 +3019,14 @@
             ],
             "description": "Page cache for Lynx CMS: guest pages stored as HTML, served by the web server or before Laravel's session starts, and cleared when content changes.",
             "support": {
-                "source": "https://github.com/LynxCMS/cache/tree/v0.1.42"
+                "source": "https://github.com/LynxCMS/cache/tree/v0.1.43"
             },
             "time": "2026-11-13T13:45:35+00:00",
-            "published-time": "2026-11-13T20:08:17+00:00"
+            "published-time": "2026-11-13T22:02:50+00:00"
         },
         {
             "name": "lynxcms/contracts",
-            "version": "v0.1.42",
+            "version": "v0.1.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LynxCMS/contracts.git",
@@ -3054,23 +3054,23 @@
             ],
             "description": "Interfaces and DTOs for Lynx CMS modules.",
             "support": {
-                "source": "https://github.com/LynxCMS/contracts/tree/v0.1.42"
+                "source": "https://github.com/LynxCMS/contracts/tree/v0.1.43"
             },
             "time": "2026-11-05T17:54:02+00:00",
-            "published-time": "2026-11-13T20:08:18+00:00"
+            "published-time": "2026-11-13T22:02:51+00:00"
         },
         {
             "name": "lynxcms/core",
-            "version": "v0.1.42",
+            "version": "v0.1.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LynxCMS/core.git",
-                "reference": "17dbc0dce67e4beef7daadbcdfde645c92341f1f"
+                "reference": "48814a92562b2cad39b64c5a0435d7f5fb50e20e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LynxCMS/core/zipball/17dbc0dce67e4beef7daadbcdfde645c92341f1f",
-                "reference": "17dbc0dce67e4beef7daadbcdfde645c92341f1f",
+                "url": "https://api.github.com/repos/LynxCMS/core/zipball/48814a92562b2cad39b64c5a0435d7f5fb50e20e",
+                "reference": "48814a92562b2cad39b64c5a0435d7f5fb50e20e",
                 "shasum": ""
             },
             "require": {
@@ -3110,14 +3110,14 @@
             ],
             "description": "Lynx CMS core: languages, fields, templates, pages, selectors and actions.",
             "support": {
-                "source": "https://github.com/LynxCMS/core/tree/v0.1.42"
+                "source": "https://github.com/LynxCMS/core/tree/v0.1.43"
             },
-            "time": "2026-11-13T18:55:30+00:00",
-            "published-time": "2026-11-13T20:08:19+00:00"
+            "time": "2026-11-13T21:37:59+00:00",
+            "published-time": "2026-11-13T22:02:49+00:00"
         },
         {
             "name": "lynxcms/forms",
-            "version": "v0.1.42",
+            "version": "v0.1.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LynxCMS/forms.git",
@@ -3157,14 +3157,14 @@
             ],
             "description": "Forms for Lynx CMS: forms defined in code, Livewire rendering, submissions in the admin and notifications.",
             "support": {
-                "source": "https://github.com/LynxCMS/forms/tree/v0.1.42"
+                "source": "https://github.com/LynxCMS/forms/tree/v0.1.43"
             },
             "time": "2026-11-13T13:45:35+00:00",
-            "published-time": "2026-11-13T20:08:15+00:00"
+            "published-time": "2026-11-13T22:02:49+00:00"
         },
         {
             "name": "lynxcms/mcp",
-            "version": "v0.1.42",
+            "version": "v0.1.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LynxCMS/mcp.git",
@@ -3200,14 +3200,14 @@
             ],
             "description": "MCP server for Lynx CMS, generated from the action registry.",
             "support": {
-                "source": "https://github.com/LynxCMS/mcp/tree/v0.1.42"
+                "source": "https://github.com/LynxCMS/mcp/tree/v0.1.43"
             },
             "time": "2026-10-24T10:55:41+00:00",
-            "published-time": "2026-11-13T20:08:13+00:00"
+            "published-time": "2026-11-13T22:02:48+00:00"
         },
         {
             "name": "lynxcms/media",
-            "version": "v0.1.42",
+            "version": "v0.1.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LynxCMS/media.git",
@@ -3246,14 +3246,14 @@
             ],
             "description": "Images and files for Lynx CMS: per-page media fields, variations and admin uploads.",
             "support": {
-                "source": "https://github.com/LynxCMS/media/tree/v0.1.42"
+                "source": "https://github.com/LynxCMS/media/tree/v0.1.43"
             },
             "time": "2026-11-12T12:34:37+00:00",
-            "published-time": "2026-11-13T20:08:14+00:00"
+            "published-time": "2026-11-13T22:02:47+00:00"
         },
         {
             "name": "lynxcms/menus",
-            "version": "v0.1.42",
+            "version": "v0.1.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LynxCMS/menus.git",
@@ -3291,14 +3291,14 @@
             ],
             "description": "Menu builder for Lynx CMS: multilingual menus stored as pages, rendered with any Blade view.",
             "support": {
-                "source": "https://github.com/LynxCMS/menus/tree/v0.1.42"
+                "source": "https://github.com/LynxCMS/menus/tree/v0.1.43"
             },
             "time": "2026-11-13T13:45:35+00:00",
-            "published-time": "2026-11-13T20:08:14+00:00"
+            "published-time": "2026-11-13T22:02:47+00:00"
         },
         {
             "name": "lynxcms/page-password",
-            "version": "v0.1.42",
+            "version": "v0.1.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LynxCMS/page-password.git",
@@ -3336,14 +3336,14 @@
             ],
             "description": "Password-protected pages for Lynx CMS (pagePassword): a password set on a page locks it and the pages below it for visitors.",
             "support": {
-                "source": "https://github.com/LynxCMS/page-password/tree/v0.1.42"
+                "source": "https://github.com/LynxCMS/page-password/tree/v0.1.43"
             },
             "time": "2026-11-13T18:32:17+00:00",
-            "published-time": "2026-11-13T20:08:16+00:00"
+            "published-time": "2026-11-13T22:02:50+00:00"
         },
         {
             "name": "lynxcms/seo",
-            "version": "v0.1.42",
+            "version": "v0.1.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LynxCMS/seo.git",
@@ -3382,14 +3382,14 @@
             ],
             "description": "SEO for Lynx CMS: meta and social tags, canonical links, robots rules and robots.txt, per template SEO fields.",
             "support": {
-                "source": "https://github.com/LynxCMS/seo/tree/v0.1.42"
+                "source": "https://github.com/LynxCMS/seo/tree/v0.1.43"
             },
             "time": "2026-11-13T18:32:17+00:00",
-            "published-time": "2026-11-13T20:08:14+00:00"
+            "published-time": "2026-11-13T22:02:47+00:00"
         },
         {
             "name": "lynxcms/sitemap",
-            "version": "v0.1.42",
+            "version": "v0.1.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LynxCMS/sitemap.git",
@@ -3428,10 +3428,10 @@
             ],
             "description": "XML sitemaps for Lynx CMS: every published page in every language, split into parts past a limit set in config or the admin.",
             "support": {
-                "source": "https://github.com/LynxCMS/sitemap/tree/v0.1.42"
+                "source": "https://github.com/LynxCMS/sitemap/tree/v0.1.43"
             },
             "time": "2026-11-13T13:45:35+00:00",
-            "published-time": "2026-11-13T20:08:19+00:00"
+            "published-time": "2026-11-13T22:02:54+00:00"
         },
         {
             "name": "mallardduck/blade-lucide-icons",
