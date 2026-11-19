@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 use App\Actions\Bookings\BookRoom;
 use App\Bookings\Booking;
+use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Validation\ValidationException;
 use LynxCms\Contracts\Actions\ActionHalted;
+use LynxCms\Contracts\Actions\Actor;
 use Zap\Models\Schedule;
 
 /*
@@ -85,7 +87,7 @@ it('keeps 5 minutes between meetings', function (): void {
 });
 
 it('lets only people with rooms.book book', function (): void {
-    book(person('guest', 'Gus'));
+    book(Actor::user(User::factory()->create(['name' => 'Gus'])->id));
 })->throws(AuthorizationException::class);
 
 it('books for someone else only for managers', function (): void {
