@@ -18,7 +18,6 @@ use LynxCms\Contracts\Actions\Actor;
 use LynxCms\Core\Actions\Roles\AssignRoles;
 use LynxCms\Core\Actions\Runner\ActionResult;
 use LynxCms\Core\Pages\Page;
-use LynxCms\PagePassword\Access\Unlocks;
 use Tests\TestCase;
 
 pest()->extend(TestCase::class)->use(RefreshDatabase::class)->in('Feature');
@@ -121,8 +120,13 @@ function unlockRooms(mixed $test): void
 {
     $rooms = lynx()->pages->get('/rooms/');
     $response = $test->post('/lynx-page-password/unlock', ['page' => $rooms?->id, 'password' => config('rooms.section_password'), 'language' => 'en']);
-    // The test client keeps no cookies between requests; the browser would.
-    $test->withCookie(Unlocks::COOKIE, (string) $response->getCookie(Unlocks::COOKIE)?->getValue());
+    // The test client keeps no cookies between requests; the browser would keep the unlock cookie.
+    // Lynx names that cookie, so every new one is copied but the app's own session and XSRF ones.
+    foreach ($response->headers->getCookies() as $cookie) {
+        if (! in_array($cookie->getName(), [config('session.cookie'), 'XSRF-TOKEN'], true)) {
+            $test->withCookie($cookie->getName(), (string) $response->getCookie($cookie->getName())?->getValue());
+        }
+    }
 }
 
 /**
