@@ -6,7 +6,6 @@ namespace App\Rooms;
 
 use App\Models\Room;
 use LynxCms\Core\Pages\Page;
-use LynxCms\Core\Pages\Trash;
 use LynxCms\Core\Pages\Visibility\PageVisibility;
 use Zap\Facades\Zap;
 
@@ -19,14 +18,12 @@ final readonly class RoomSync
 {
     public const string TEMPLATE = 'room';
 
-    public function __construct(private Trash $trash) {}
-
     public function sync(int $pageId): void
     {
         // Rooms sit behind the Rooms section's password, a rule for visitors, not for this.
         $page = app(PageVisibility::class)->withoutRules(fn (): ?Page => lynx()->pages->get($pageId));
 
-        if (! $page instanceof Page || (string) $page->template()->name !== self::TEMPLATE || $this->trash->holds($pageId)) {
+        if (! $page instanceof Page || (string) $page->template()->name !== self::TEMPLATE || lynx()->pages->inTrash($pageId)) {
             $this->remove($pageId);
 
             return;
